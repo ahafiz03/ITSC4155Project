@@ -1,4 +1,5 @@
-from app import db
+# models/note.py
+from extensions import db  # Import db from extensions
 
 class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)

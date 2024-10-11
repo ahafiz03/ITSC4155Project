@@ -1,14 +1,14 @@
 from flask import Flask, render_template, redirect, url_for, request
+from extensions import db  # Import the db from extensions
 from models.note import Note
-from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-#database config
+# Database config
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///noted.db'
-db = SQLAlchemy(app)
+db.init_app(app)  # Initialize db with the app
 
-#homepage route
+# Homepage route
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -49,5 +49,6 @@ def delete_note(id):
     db.session.delete(note)
     db.session.commit()
     return redirect(url_for('view_notes'))
+
 if __name__ == '__main__':
     app.run(debug=True)
