@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <ul>
+                <li><a href="{{ url_for('view_notes') }}">View Notes</a></li>
+                <li><a href="{{ url_for('create_note') }}">Create a New Note</a></li>
+            </ul>
+        </nav>
+
+        <div class="main-content">
+            <h1>Welcome to the Notetaking App!</h1>
+            <p>Select an option from the sidebar to get started.</p>
+        </div>
+    </div>
+</body>
+</html>

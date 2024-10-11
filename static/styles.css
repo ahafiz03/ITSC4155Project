@@ -1,0 +1,51 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    height: 100vh; /* Full height of the viewport */
+}
+
+.sidebar {
+    width: 200px; /* Fixed width for the sidebar */
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 20px;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #007bff;
+    display: block; /* Make links block-level elements */
+}
+
+.sidebar ul li a:hover {
+    color: #0056b3;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 40px;
+    background-color: #ffffff;
+}
+
+h1 {
+    margin-top: 0;
+    text-align: center;
+}
+
+p {
+    text-align: center;
+}
