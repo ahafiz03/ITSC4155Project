@@ -1,0 +1,32 @@
+{% extends '_template.html' %}
+{% block title %}StudySphere | Sign Up{% endblock %}
+
+{% block content %}
+<div class="p-5 bg-secondary w-75 mx-auto" style="--bs-bg-opacity: .1;"></div>
+<h1 class="text-center mb-5">Sign Up</h1>
+<div class="mx-auto w-50">
+    <form action="/signup" method="POST" class="mb-5">
+        <div class="form-group pb-3">
+            <label for="first_name">First Name</label>
+            <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Enter First Name" required>
+        </div>
+        <div class="form-group pb-3">
+            <label for="last_name">Last Name</label>
+            <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Enter Last Name" required>
+        </div>
+        <div class="form-group pb-3">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter email" required>
+        </div>
+        <div class="form-group pb-3">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+        </div>
+        <div class="form-group pb-3">
+            <label for="re-password">Re-enter Password</label>
+            <input type="password" class="form-control" name="re-password" id="re-password" placeholder="Re-enter Password">
+        </div>
+        <button type="submit" class="btn btn-primary w-100 opacity-75">Submit</button>
+    </form>
+</div>
+{% endblock %}

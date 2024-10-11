@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, session
 from extensions import db  # Import the db from extensions
 from models.note import Note
 
@@ -49,6 +49,13 @@ def delete_note(id):
     db.session.delete(note)
     db.session.commit()
     return redirect(url_for('view_notes'))
+
+# Route to create an account
+@app.get("/signup")
+def get_account_signup_page():
+    if "email" in session:
+        return redirect("/account")
+    return render_template("signup.html")
 
 if __name__ == '__main__':
     app.run(debug=True)
