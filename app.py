@@ -57,5 +57,12 @@ def get_account_signup_page():
         return redirect("/account")
     return render_template("signup.html")
 
+# Route to login to account
+@app.get("/login")
+def get_account_login_page():
+    if "email" in session:
+        return redirect("/account")
+    return render_template("login.html")
+
 if __name__ == '__main__':
     app.run(debug=True)
