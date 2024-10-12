@@ -14,7 +14,7 @@ class BasicTestCase(unittest.TestCase):
     def test_index(self):
         response = self.app.get('/')
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b'Welcome!', response.data)
+        self.assertIn(b'Welcome to StudySphere!', response.data)
 
 if __name__ == '__main__':
     unittest.main()
