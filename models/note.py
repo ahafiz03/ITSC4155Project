@@ -1,10 +1,12 @@
-# models/note.py
-from extensions import db  # Import db from extensions
+from datetime import datetime, timezone
+from extensions import db  # Ensure you have an extensions.py for db setup
+from sqlalchemy import Column, Integer, String, DateTime
 
 class Note(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    content = db.Column(db.Text, nullable=False)
-
-    def __repr__(self):
-        return f'<Note {self.title}>'
+    __tablename__ = 'note'
+    
+    id = Column(Integer, primary_key=True)
+    title = Column(String, nullable=False)
+    content = Column(String, nullable=False)
+    created_at = Column(DateTime, default=datetime.now(timezone.utc))
+    last_modified = Column(DateTime, default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))

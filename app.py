@@ -1,12 +1,19 @@
-from flask import Flask, render_template, redirect, url_for, request, session
+from flask import Flask, render_template, redirect, url_for, request, flash, session
 from extensions import db  # Import the db from extensions
 from models.note import Note
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 
 # Database config
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///noted.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = 'your_secret_key'
+
+
 db.init_app(app)  # Initialize db with the app
+migrate = Migrate(app, db)  # Initialize Migrate
 
 # Homepage route
 @app.route('/')
@@ -16,8 +23,8 @@ def home():
 # Route to view all notes
 @app.route('/notes')
 def view_notes():
-    notes = Note.query.all()
-    return render_template('notes.html', notes=notes)
+    notes = Note.query.order_by(Note.last_modified.desc()).all()
+    return render_template('notebook.html', notes=notes)
 
 # Route to create a new note
 @app.route('/notes/new', methods=['GET', 'POST'])
@@ -28,26 +35,29 @@ def create_note():
         new_note = Note(title=title, content=content)
         db.session.add(new_note)
         db.session.commit()
+        flash('Note created successfully!', 'success')
         return redirect(url_for('view_notes'))
     return render_template('create_note.html')
 
 # Route to edit a note
 @app.route('/notes/<int:id>/edit', methods=['GET', 'POST'])
 def edit_note(id):
-    note = Note.query.get(id)
+    note = Note.query.get_or_404(id)
     if request.method == 'POST':
         note.title = request.form['title']
         note.content = request.form['content']
         db.session.commit()
+        flash('Note updated successfully!', 'success')
         return redirect(url_for('view_notes'))
     return render_template('edit_note.html', note=note)
 
 # Route to delete a note
 @app.route('/notes/<int:id>/delete', methods=['POST'])
 def delete_note(id):
-    note = Note.query.get(id)
+    note = Note.query.get_or_404(id)
     db.session.delete(note)
     db.session.commit()
+    flash('Note deleted successfully!', 'danger')
     return redirect(url_for('view_notes'))
 
 # Route to create an account
