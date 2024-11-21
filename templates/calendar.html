@@ -2,35 +2,36 @@
 <html> 
 <head>
      <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css' rel='stylesheet' /> 
+     <link herf='/static/styles.css' rel='stylesheet' />
      <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js'></script> 
-     <style> 
-        body { font-family: Arial, Helvetica, sans-serif; } 
-        #calendar { 
-            max-width: 900px; 
-            margin: 40px auto; 
-            padding: 20px; 
-            background-color: white; 
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); } 
-            .form-container { 
-                max-width: 900px; 
-                margin: 20px auto; 
-                padding: 20px; 
-                background-color: white; 
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); } 
-        </style> 
+     
         </head> 
         <body> 
-            <div class="form-container"> 
-            <form id="event-form"> 
-            <label for="title">Event Title:</label><br> 
-            <input type="text" id="title" name="title"><br><br> 
-            <label for="start">Start Date:</label><br> 
-            <input type="date" id="start" name="start"><br><br> 
-            <input type="submit" value="Add Event"> 
-    
-    </form> 
+            <div class="container">
+                <div class="sidebar">
+                    <ul>
+                        <li><a herf="#">Home</a></li>
+                        <li><a href="#">Calendar</a></li>
+                        <li><a herf="#">Events</a></li>
+                        <li><a href="#">Settings</a></li>
+                    </ul>
+                </div>
+
+                <div class="main-content">
+                    <h1>Event Calendar</h1>
+                    <div class="form-container">
+                        <form id="event-form">
+                            <label for="title">Event Title: </label><br>
+                            <input type="text" id="title" name="title"><br><br>
+                            <label for="start">Start Date:</label><br>
+                            <input type="date" id="start" name="start"><br><br>
+                            <input type="submit" value="Add Event" class="btn-primary">
+                        </form>
+                    </div>
+                    <div id="calendar"></div>
+                </div>
     </div> 
-    <div id="calendar"></div> 
+
     <script> document.addEventListener('DOMContentLoaded', function () 
     { var calendarEl = document.getElementById('calendar'); 
     var calendar = new FullCalendar.Calendar(calendarEl, 
