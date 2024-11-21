@@ -4,14 +4,14 @@
      <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css' rel='stylesheet' /> 
      <link herf='/static/styles.css' rel='stylesheet' />
      <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js'></script> 
-     
+
         </head> 
         <body> 
             <div class="container">
                 <div class="sidebar">
                     <ul>
-                        <li><a herf="#">Home</a></li>
-                        <li><a href="#">Calendar</a></li>
+                        <li><a herf="{{url_for('home')}}">Home</a></li>
+                        <li><a href="calendar.html">Calendar</a></li>
                         <li><a herf="#">Events</a></li>
                         <li><a href="#">Settings</a></li>
                     </ul>

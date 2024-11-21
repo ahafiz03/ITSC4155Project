@@ -65,6 +65,12 @@ def delete_note(id):
     flash('Note deleted successfully!', 'danger')
     return redirect(url_for('view_notes'))
 
+# Route to manage events
+@app.route('/manage_events')
+def manage_events():
+    return render_template('manage_events.html')
+
+
 # Route to render calendar
 @app.route('/calendar')
 def index():
@@ -74,7 +80,7 @@ def index():
 @app.route('/get_events')
 def get_events():
     events = Event.query.all()
-    event_list = [{'title': event.title, 'start': event.start} for event in events]
+    event_list = [{'id': event.id, 'title': event.title, 'start': event.start} for event in events]
     return jsonify(event_list)
 
 # Route to add event to calendar
@@ -95,6 +101,18 @@ def delete_event(event_id):
         db.session.commit()
         return jsonify({'success': True})
         return jsonify({'success': False, 'message': 'Event not found'}), 404
+    
+# Route to edit an event
+@app.route('/edit_event/<int:event_id', methods=['PUT'])
+def edit_event(event_id):
+    event_data = request.json
+    event = Event.query.get(event_id)
+    if event:
+        event.title = event_data['title']
+        event.start = event_data['start']
+        db.session.commit()
+        return jsonify({'success': True})
+    return jsonify({'success': False, 'message': 'Event not found'})
 
 # Route to create an account
 @app.get("/signup")
