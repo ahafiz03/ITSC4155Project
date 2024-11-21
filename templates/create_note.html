@@ -4,24 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Note</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Create Note</h1>
-    <form method="POST">
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required>
-        <br>
-        <label for="content">Content:</label>
-        <textarea id="content" name="content" required></textarea>
-        <br>
-        <button type="submit">Save</button>
-    </form>
-    <br>
-    <!-- Link to go back to notes page -->
-    <a href="{{ url_for('view_notes') }}">Back to Notes</a>
-    <!-- Button to go back to home page -->
-    <a href="{{ url_for('home') }}">
-        <button>Back to Home</button>
-    </a>
+    <div class="container">
+        <div class="sidebar">
+            <ul>
+                <li><a href="{{ url_for('view_notes') }}">View Notes</a></li>
+                <li><a href="{{ url_for('home') }}">Back to Home</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <h1>Create Note</h1>
+            <form method="POST" class="note-form">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+
+                <label for="content">Content:</label>
+                <textarea id="content" name="content" required></textarea>
+
+                <button type="submit" class="btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
