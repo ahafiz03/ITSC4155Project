@@ -103,7 +103,7 @@ def delete_event(event_id):
         return jsonify({'success': False, 'message': 'Event not found'}), 404
     
 # Route to edit an event
-@app.route('/edit_event/<int:event_id', methods=['PUT'])
+@app.route('/edit_event/<int:event_id>', methods=['PUT'])
 def edit_event(event_id):
     event_data = request.json
     event = Event.query.get(event_id)
