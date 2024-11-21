@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, flash, session
+from flask import Flask, render_template, redirect, url_for, request, flash, session, jsonify
 from extensions import db  # Import the db from extensions
 from models.note import Note
 from flask_sqlalchemy import SQLAlchemy
@@ -14,6 +14,11 @@ app.config['SECRET_KEY'] = 'your_secret_key'
 
 db.init_app(app)  # Initialize db with the app
 migrate = Migrate(app, db)  # Initialize Migrate
+# Creates the event model
+class Event(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    start = db.Column(db.String(10), nullable=False)
 
 # Homepage route
 @app.route('/')
@@ -59,6 +64,37 @@ def delete_note(id):
     db.session.commit()
     flash('Note deleted successfully!', 'danger')
     return redirect(url_for('view_notes'))
+
+# Route to render calendar
+@app.route('/calendar')
+def index():
+    return render_template('calendar.html')
+
+# Route to view events
+@app.route('/get_events')
+def get_events():
+    events = Event.query.all()
+    event_list = [{'title': event.title, 'start': event.start} for event in events]
+    return jsonify(event_list)
+
+# Route to add event to calendar
+@app.route('/add_event', methods=['POST'])
+def add_event():
+    event_data = request.json
+    new_event = Event(title=event_data['title'], start=event_data['start'])
+    db.session.add(new_event)
+    db.session.commit()
+    return jsonify({'success': True})
+
+# Route to delete an event 
+@app.route('/delete_event/<int:event_id>', methods=['DELETE'])
+def delete_event(event_id):
+    event = Event.query.get(event_id)
+    if event:
+        db.session.delete(event)
+        db.session.commit()
+        return jsonify({'success': True})
+        return jsonify({'success': False, 'message': 'Event not found'}), 404
 
 # Route to create an account
 @app.get("/signup")
