@@ -1,8 +1,10 @@
 from flask import Flask, render_template, redirect, url_for, request, flash, session, jsonify
 from extensions import db  # Import the db from extensions
 from models.note import Note
+from models.event import Event
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+import os
 
 app = Flask(__name__)
 
@@ -14,6 +16,13 @@ app.config['SECRET_KEY'] = 'your_secret_key'
 
 db.init_app(app)  # Initialize db with the app
 migrate = Migrate(app, db)  # Initialize Migrate
+
+with app.app_context():
+    if not os.path.exists('noted.db'):
+        print("Database not found. Creating...")
+        db.create_all()
+        print("Database created.")
+
 # Creates the event model
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
