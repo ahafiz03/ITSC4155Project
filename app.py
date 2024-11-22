@@ -115,18 +115,18 @@ def edit_event(event_id):
     return jsonify({'success': False, 'message': 'Event not found'})
 
 # Route to create an account
-@app.get("/signup")
+@app.route("/signup", methods=["GET"])
 def get_account_signup_page():
     if "email" in session:
         return redirect("/account")
     return render_template("signup.html")
 
-# Route to login to account
-@app.get("/login")
+@app.route("/login", methods=["GET"])
 def get_account_login_page():
     if "email" in session:
         return redirect("/account")
     return render_template("login.html")
+
 
 if __name__ == '__main__':
     app.run(debug=True)
