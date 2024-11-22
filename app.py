@@ -70,10 +70,9 @@ def delete_note(id):
 def manage_events():
     return render_template('manage_events.html')
 
-
 # Route to render calendar
 @app.route('/calendar')
-def index():
+def calendar():
     return render_template('calendar.html')
 
 # Route to view events

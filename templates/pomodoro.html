@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Timer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .pomodoro-container {
+            text-align: center;
+            padding: 50px;
+        }
+
+        .timer-circle {
+            font-size: 48px;
+            font-weight: bold;
+            color: #007bff;
+            margin: 20px auto;
+            width: 200px;
+            height: 200px;
+            line-height: 200px;
+            border: 5px solid #007bff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .control-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .control-buttons button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .control-buttons button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-left">
+            <img src="/static/StudySphere.png" alt="Logo" class="logo">
+            <span class="brand-text">StudySphere</span>
+        </div>
+        <div class="header-right">
+            <a href="{{ url_for('get_account_login_page') }}" class="header-link">Login</a>
+            <a href="{{ url_for('get_account_signup_page') }}" class="header-link">Sign Up</a>
+        </div>
+    </header>
+    <div class="container">
+        <div class="sidebar">
+            <ul>
+                <li><a href="{{ url_for('view_notes') }}">View Notes</a></li>
+                <li><a href="{{ url_for('create_note') }}">Create a New Note</a></li>
+                <li><a href="{{ url_for('pomodoro') }}">Pomodoro Timer</a></li>
+                <li><a href="{{ url_for('calendar') }}">Calendar</a></li>
+                <li><a href="{{ url_for('manage_events') }}">Manage Events</a></li>
+                <li><a href="{{ url_for('home') }}">Back to Home</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <div class="pomodoro-container">
+                <h1>Pomodoro Timer</h1>
+                <div class="timer-circle" id="timer">15:00</div>
+                <div class="control-buttons">
+                    <button onclick="togglePauseResume()">Pause</button>
+                    <button onclick="restartTimer()">Restart</button>
+                    <button onclick="chooseTime()">Choose Time</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let timer;
+        let minutes = 15;
+        let seconds = 0;
+        let isPaused = false;
+        let enteredTime = null;
+
+        function startTimer() {
+            timer = setInterval(updateTimer, 1000);
+        }
+
+        function updateTimer() {
+            const timerElement = document.getElementById('timer');
+            timerElement.textContent = formatTime(minutes, seconds);
+
+            if (minutes === 0 && seconds === 0) {
+                clearInterval(timer);
+                alert('Time is up! Take a break.');
+            } else if (!isPaused) {
+                if (seconds > 0) {
+                    seconds--;
+                } else {
+                    seconds = 59;
+                    minutes--;
+                }
+            }
+        }
+
+        function formatTime(minutes, seconds) {
+            return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function togglePauseResume() {
+            const pauseResumeButton = document.querySelector('.control-buttons button');
+            isPaused = !isPaused;
+
+            if (isPaused) {
+                clearInterval(timer);
+                pauseResumeButton.textContent = 'Resume';
+            } else {
+                startTimer();
+                pauseResumeButton.textContent = 'Pause';
+            }
+        }
+
+        function restartTimer() {
+            clearInterval(timer);
+            minutes = enteredTime || 15;
+            seconds = 0;
+            isPaused = false;
+            const timerElement = document.getElementById('timer');
+            timerElement.textContent = formatTime(minutes, seconds);
+            const pauseResumeButton = document.querySelector('.control-buttons button');
+            pauseResumeButton.textContent = 'Pause';
+            startTimer();
+        }
+
+        function chooseTime() {
+            const newTime = prompt('Enter new time in minutes:');
+            if (!isNaN(newTime) && newTime > 0) {
+                enteredTime = parseInt(newTime);
+                minutes = enteredTime;
+                seconds = 0;
+                isPaused = false;
+                const timerElement = document.getElementById('timer');
+                timerElement.textContent = formatTime(minutes, seconds);
+                clearInterval(timer);
+                const pauseResumeButton = document.querySelector('.control-buttons button');
+                pauseResumeButton.textContent = 'Pause';
+                startTimer();
+            } else {
+                alert('Invalid input. Please enter a valid number greater than 0.');
+            }
+        }
+
+        startTimer();
+    </script>
+</body>
+
+</html>
