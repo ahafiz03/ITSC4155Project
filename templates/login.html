@@ -7,20 +7,39 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <div class="p-5 bg-secondary w-75 mx-auto" style="--bs-bg-opacity: .1;">
-        <h1 class="text-center mb-5">Login</h1>
-        <div class="mx-auto w-50">
-            <form action="/login" method="POST" class="mb-5">
-                <div class="form-group pb-3">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter email" required>
-                </div>
-                <div class="form-group pb-3">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" name="password" id="password" placeholder="Password">
-                </div>
-                <button type="submit" class="btn btn-primary w-100 opacity-75">Login</button>
-            </form>
+    <header class="header">
+        <div class="header-left">
+            <img src="/static/StudySphere.png" alt="Logo" class="logo">
+            <span class="brand-text">StudySphere</span>
+        </div>
+        <div class="header-right">
+            <a href="{{ url_for('get_account_login_page') }}" class="header-link">Login</a>
+            <a href="{{ url_for('get_account_signup_page') }}" class="header-link">Sign Up</a>
+        </div>
+    </header>
+    <div class="container">
+        <div class="sidebar">
+            <ul>
+                <li><a href="{{ url_for('view_notes') }}">View Notes</a></li>
+                <li><a href="{{ url_for('home') }}">Back to Home</a></li>
+                <li><a href="{{ url_for('create_note') }}">Create a New Note</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <div class="form-container">
+                <h1 class="text-center">Login</h1>
+                <form action="/login" method="POST" class="note-form">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+            </div>
         </div>
     </div>
 </body>
