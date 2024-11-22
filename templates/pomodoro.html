@@ -7,7 +7,6 @@
     <title>Pomodoro Timer</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <style>
-        /* Pomodoro-specific styles */
         .pomodoro-container {
             text-align: center;
             padding: 50px;
@@ -67,8 +66,11 @@
         <div class="sidebar">
             <ul>
                 <li><a href="{{ url_for('view_notes') }}">View Notes</a></li>
-                <li><a href="{{ url_for('home') }}">Back to Home</a></li>
                 <li><a href="{{ url_for('create_note') }}">Create a New Note</a></li>
+                <li><a href="{{ url_for('pomodoro') }}">Pomodoro Timer</a></li>
+                <li><a href="{{ url_for('calendar') }}">Calendar</a></li>
+                <li><a href="{{ url_for('manage_events') }}">Manage Events</a></li>
+                <li><a href="{{ url_for('home') }}">Back to Home</a></li>
             </ul>
         </div>
         <div class="main-content">
