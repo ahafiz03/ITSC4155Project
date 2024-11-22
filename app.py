@@ -126,6 +126,10 @@ def get_account_login_page():
         return redirect("/account")
     return render_template("login.html")
 
+# Route for the Pomodoro Timer
+@app.route('/pomodoro')
+def pomodoro():
+    return render_template('pomodoro.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
